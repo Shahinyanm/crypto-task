@@ -9,7 +9,7 @@ export interface TickerHistoryItem {
   value: number;
 }
 
-export interface TickerHistory extends Ticker {
+export interface TickerHistory {
   max: number;
   min: number;
   items: TickerHistoryItem[];
@@ -46,7 +46,7 @@ export const useTickerStore = defineStore("ticker", () => {
       histories.value[ticker.from].max = Math.max(history.max, ticker.price);
       histories.value[ticker.from].min = Math.min(history.min, ticker.price);
 
-      if (history.items[history.items.length - 1] === ticker.price) {
+      if (history.items[history.items.length - 1].value === ticker.price) {
         return;
       }
 
@@ -67,7 +67,7 @@ export const useTickerStore = defineStore("ticker", () => {
   };
 
   connection.subscribe(
-    ...tickers.value.map((ticker, i) => ({
+    ...tickers.value.map((ticker) => ({
       from: ticker.from,
       to: "USD",
       success: setTicker,
@@ -80,6 +80,7 @@ export const useTickerStore = defineStore("ticker", () => {
     }
 
     return new Promise(
+      // eslint-disable-next-line no-async-promise-executor
       async (res, rej) =>
         await connection.subscribe({
           from: source,

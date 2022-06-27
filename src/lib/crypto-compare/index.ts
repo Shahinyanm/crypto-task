@@ -5,6 +5,7 @@ export interface Ticker {
 }
 
 type Callback = (t: Ticker) => void;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ErrorCallback = (err: any) => void;
 
 interface SubscribeRequest {

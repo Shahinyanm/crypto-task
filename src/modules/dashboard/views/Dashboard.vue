@@ -50,7 +50,7 @@ const paginated = computed(() =>
 );
 
 watch(query, () => {
-  page.value = "1";
+  page.value = 1;
 });
 
 const addTicker = async () => {
